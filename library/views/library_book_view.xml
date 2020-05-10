@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <!-- Form for Book Model-->
+    <record id="library_book_form_view" model="ir.ui.view">
+        <field name="name">Library Book Form</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form string="Book Form">
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image&quot;}"/>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Book Name" />
+                        <h2><field name="name"/></h2>
+                    </div>
+                    <group colspan="4">
+                        <group>
+                            <separator string="General Information" colspan="2"/>
+                            <field name="isbn"/>
+                            <field name="date_publish"/>
+                            <field name="color"/>
+                            <field name="state"/>
+                         </group>
+                        <group>
+                            <separator string="Category and Author" colspan="2"/>
+                            <field name="category_ids" widget="many2many_tags"/>
+                            <field name="category_count"/>
+                            <field name="author_id"/>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Description">
+                                <field name="description" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree for Book Model-->
+    <record id="library_book_tree_view" model="ir.ui.view">
+        <field name="name">Library Book List</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <tree string="Book List" decoration-bf="state == 'bf'" decoration-it="state == 'it'"
+                  decoration-success="state == 'success'" decoration-info="state == 'info'" decoration-warning="state == 'warning'"
+                  decoration-danger="state == 'danger'" decoration-muted="state == 'muted'" decoration-primary="state == 'primary'">
+                <field name="name"/>
+                <field name="isbn"/>
+                <field name="date_publish"/>
+                <field name="category_count"/>
+                <field name="author_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- calendar view -->
+    <record model="ir.ui.view" id="book_calendar_view">
+        <field name="name">Library Book calendar</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <calendar string="Book Publish Calendar" date_start="date_publish" date_stop="date_publish" color="state">
+                <field name="name"/>
+                <field name="isbn"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_library_book_kanban">
+        <field name="name">Library Book Kanban</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="author_id">
+                <field name="color"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div
+                                t-attf-class="oe_kanban_color_{{kanban_getcolor(record.color.raw_value)}}
+                                              oe_kanban_global_click_edit oe_semantic_html_override
+                                              oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
+                            <div class="oe_dropdown_kanban">
+                                <!-- dropdown menu -->
+                                <div class="oe_dropdown_toggle">
+                                    <i class="fa fa-bars fa-lg" title="Book" aria-label="Book"/>
+                                    <ul class="oe_dropdown_menu">
+                                        <li>
+                                            <a type="delete">Delete</a>
+                                        </li>
+                                        <li>
+                                            <ul class="oe_kanban_colorpicker"
+                                                data-field="color"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="oe_clear"></div>
+                            </div>
+                            <div t-attf-class="oe_kanban_content">
+                                <!-- title -->
+                                Book name:
+                                <field name="name"/>
+                                <br/>
+                                Publish date:
+                                <field name="date_publish"/>
+                                <br/>
+                                ISBN:
+                                <field name="isbn"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_library_book_tree_view" model="ir.actions.act_window">
+        <field name="name">Books</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">library.book</field>
+        <field name="view_mode">tree,form,calendar,kanban</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Create new books
+          </p><p>
+             Option for create new record of Book
+          </p>
+        </field>
+    </record>
+
+</odoo>

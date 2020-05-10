@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <menuitem id="menu_library_root" name="Library" sequence="0"/>
+
+        <menuitem id="menu_library_general" name="General" parent="menu_library_root" sequence="1"/>
+        <menuitem id="menu_library_book_action" name="Books" parent="menu_library_general" action="action_library_book_tree_view" sequence="1"/>
+        <menuitem id="menu_library_category_action" name="Categories" parent="menu_library_general" action="action_library_category_tree_view" sequence="2"/>
+        <menuitem id="menu_library_author_action" name="Authors" parent="menu_library_general" action="action_library_author_tree_view" sequence="3"/>
+    </data>
+</odoo>

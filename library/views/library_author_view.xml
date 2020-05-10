@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <!-- Form for Author Model-->
+    <record id="library_author_form_view" model="ir.ui.view">
+        <field name="name">Library Author Form</field>
+        <field name="model">library.author</field>
+        <field name="arch" type="xml">
+            <form string="Author Form">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="address"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree for Author Model-->
+    <record id="library_author_tree_view" model="ir.ui.view">
+        <field name="name">Library Author List</field>
+        <field name="model">library.author</field>
+        <field name="arch" type="xml">
+            <tree string="Author List">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_library_author_tree_view" model="ir.actions.act_window">
+        <field name="name">Authors</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">library.author</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Create new Author
+          </p><p>
+             Option for create new record of Author
+          </p>
+        </field>
+    </record>
+</odoo>
